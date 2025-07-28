@@ -30,8 +30,10 @@ This website addresses the critical information gap that families face when deal
 - **Accessible typography** using Inter font family
 - **Smooth animations** and hover effects
 - **Card-based layout** for easy information consumption
+- (https://www.figma.com/board/O4IEfDJSpf55iKdYyHQdU3/UX--team-workspace?node-id=352-68&t=RU7oczd4LKoAgHuU-0)
+- (https://miro.com/app/board/uXjVJe8T6gk=/)
 
-### 🔧 Functionality
+  ### 🔧 Functionality
 - **Interactive accordion sections** for question categories:
   - 📍 Initial Information After Arrest
   - ⚖️ Legal Representation
