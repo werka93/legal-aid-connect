@@ -1,67 +1,492 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ss25-Judged</title>
-<link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judged - Legal Guidance When You Need It Most</title>
+    <meta name="description" content="Get trusted, locally-tailored legal guidance for arrest situations and criminal justice navigation. Available 24/7 for individuals and families.">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Judged - Legal Guidance When You Need It Most">
+    <meta property="og:description" content="Trusted, accessible legal guidance for arrest situations and criminal justice navigation">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://judged.app">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<div class="header">
-<h1>🏃‍♀️Run for Good</h1>
-<p>Charity Marathon Registration - Berlin, july 2025 </p>
-<p>Join us in making a difference!</p>
-<p>Register now to participate in our charity marathon and help us reach our fundraising goal! All proceeds go to a local charity.</p>
-
-</div>
-
-<div class="stats">
-<h2>Registration Stats</h2>
-<p>Current participants: <strong id="participantCount">0</strong></p>
-<p>Target: <strong>100 runners</strong></p>
-<p>Target amount: <strong>EUR 5000</strong></p>
-</div>
-
-<form id="registrationForm">
-<div class="form-group">
-<label for="name">Full Name:</label>
-<input type="text" id="name" required>
-</div>
-
-<div class="form-group">
-<label for="age">Age:</label>
-<input type="number" id="age" min="16" max="99" required>
-</div>
-
-<div class="form-group">
-<label for="email">Email:</label>
-<input type="email" id="email" required>
-</div>
-
-<!-- NEW GENDER FIELD -->
-<div class="form-group">
-<label for="gender">Gender:</label>
-<select id="gender" required>
-<option value="">Select Gender</option>
-<option value="Male">Male</option>
-<option value="Female">Female</option>
-<option value="Other">Other</option>
-<option value="Prefer not to say">Prefer not to say</option>
-</select>
-</div>
-
-<button type="submit" class="btn">Register</button>
-</form>
-
-<div class="participants-section">
-<h2 class="participants-header">Registered Participants</h2>
-<div id="participantsList" class="participants-list">
-<div class="loading">
-<p>Loading participants...</p>
-</div>
-</div>
-</div>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Judged</h1>
+                </div>
+                <nav class="nav desktop-nav">
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#resources" class="nav-link">Resources</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="emergency-btn" onclick="handleEmergencyCall()">
+                        <i class="fas fa-phone"></i>
+                        Emergency Help
+                    </button>
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-content">
+                <a href="#services" class="mobile-nav-link" onclick="closeMobileMenu()">Services</a>
+                <a href="#resources" class="mobile-nav-link" onclick="closeMobileMenu()">Resources</a>
+                <a href="#faq" class="mobile-nav-link" onclick="closeMobileMenu()">FAQ</a>
+                <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">Contact</a>
+            </div>
+        </div>
+    </header>
 
-<script src="js/script.js"></script>
+    <!-- Emergency Alert Banner -->
+    <div class="emergency-banner">
+        <div class="container">
+            <p>
+                <i class="fas fa-exclamation-triangle"></i>
+                In immediate danger? Call 911 first. Need legal help after arrest? Start here.
+            </p>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Get Legal Help When You Need It Most</h2>
+                <p>Immediate guidance, local resources, and step-by-step support for arrest situations</p>
+                
+                <div class="location-finder">
+                    <h3>Find Local Resources</h3>
+                    <div class="search-form">
+                        <input 
+                            type="text" 
+                            id="locationSearch" 
+                            placeholder="Enter your ZIP code or city"
+                            onkeypress="handleSearchKeyPress(event)"
+                        >
+                        <button class="search-btn" onclick="searchLocation()">
+                            <span class="search-text">Find Resources Near Me</span>
+                            <span class="loading-text" style="display: none;">Searching...</span>
+                        </button>
+                    </div>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+        <div class="container">
+            <h2>Need Immediate Help?</h2>
+            <div class="actions-grid">
+                <div class="action-card emergency">
+                    <div class="action-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Just Arrested?</h3>
+                    <p>Get immediate guidance on your rights and next steps</p>
+                    <button onclick="scrollToSection('services')">Start Here</button>
+                </div>
+                
+                <div class="action-card support">
+                    <div class="action-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Family Support</h3>
+                    <p>Help a loved one through the legal process</p>
+                    <button onclick="scrollToSection('family-support')">Get Support</button>
+                </div>
+                
+                <div class="action-card preparation">
+                    <div class="action-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Court Preparation</h3>
+                    <p>Understand court procedures and prepare your case</p>
+                    <button onclick="scrollToSection('resources')">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step-by-Step Guidance -->
+    <section id="services" class="guidance-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Step-by-Step Guidance</h2>
+                <p>Clear, actionable steps for navigating arrest situations</p>
+            </div>
+            
+            <div class="guidance-content">
+                <div class="guidance-image">
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                         alt="Professional legal consultation" loading="lazy">
+                </div>
+                
+                <div class="guidance-steps">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Remain Silent & Request a Lawyer</h3>
+                            <p>Exercise your Fifth Amendment right. Say "I want to speak to a lawyer" and nothing else until legal representation arrives.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Contact Someone You Trust</h3>
+                            <p>You have the right to one phone call. Use it to contact a trusted family member or friend who can help arrange legal representation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Understand Your Charges</h3>
+                            <p>Listen carefully when charges are read. Don't admit guilt or discuss details. Your lawyer will help you understand the legal implications.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Prepare for Bail Hearing</h3>
+                            <p>Work with your attorney to present factors that favor release: community ties, employment, and lack of flight risk.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resource Directory -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Local Resources & Services</h2>
+                <p>Find qualified legal professionals and support services in your area</p>
+            </div>
+            
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon public-defender">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Public Defenders</h3>
+                    <p>Court-appointed attorneys for those who cannot afford private representation</p>
+                    <div class="resource-meta">
+                        <span class="availability">Available 24/7</span>
+                        <span class="cost free">Free</span>
+                    </div>
+                    <button onclick="findResource('public_defender')">Find Near Me</button>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon legal-aid">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Legal Aid Societies</h3>
+                    <p>Non-profit organizations providing free legal assistance to low-income individuals</p>
+                    <div class="resource-meta">
+                        <span class="availability">Income-based</span>
+                        <span class="cost low-cost">Low Cost</span>
+                    </div>
+                    <button onclick="findResource('legal_aid')">Find Near Me</button>
+                </div>
+                
+                <div class="resource-card">
+                    <div class="resource-icon private-attorney">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Private Attorneys</h3>
+                    <p>Experienced criminal defense lawyers with specialized expertise</p>
+                    <div class="resource-meta">
+                        <span class="availability">Immediate availability</span>
+                        <span class="cost paid">Paid</span>
+                    </div>
+                    <button onclick="findResource('private_attorney')">Find Near Me</button>
+                </div>
+            </div>
+            
+            <!-- Emergency Contacts -->
+            <div class="emergency-contacts">
+                <h3>Emergency Legal Contacts</h3>
+                <div class="emergency-grid">
+                    <div class="emergency-image">
+                        <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                             alt="Courthouse exterior" loading="lazy">
+                    </div>
+                    <div class="emergency-list">
+                        <div class="emergency-item">
+                            <div class="emergency-info">
+                                <h4>24/7 Legal Hotline</h4>
+                                <p>Immediate legal advice</p>
+                            </div>
+                            <button onclick="callNumber('1-800-LEGAL-AID')">Call Now</button>
+                        </div>
+                        
+                        <div class="emergency-item">
+                            <div class="emergency-info">
+                                <h4>Bail Bond Services</h4>
+                                <p>Available 24/7</p>
+                            </div>
+                            <button onclick="findResource('bail_bonds')">Find Services</button>
+                        </div>
+                        
+                        <div class="emergency-item">
+                            <div class="emergency-info">
+                                <h4>Crisis Text Line</h4>
+                                <p>Text "LEGAL" to 741741</p>
+                            </div>
+                            <button onclick="sendText('741741', 'LEGAL')">Text Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Family Support -->
+    <section id="family-support" class="family-support">
+        <div class="container">
+            <div class="section-header">
+                <h2>Supporting Your Loved One</h2>
+                <p>Guidance for family and friends during legal crises</p>
+            </div>
+            
+            <div class="support-content">
+                <div class="support-images">
+                    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                         alt="Family providing support" loading="lazy">
+                    <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                         alt="Family reviewing documents" loading="lazy">
+                </div>
+                
+                <div class="support-guides">
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Immediate Steps to Take</h3>
+                        <ul>
+                            <li>Stay calm and gather important information about the arrest</li>
+                            <li>Contact a criminal defense attorney immediately</li>
+                            <li>Gather funds for potential bail or legal fees</li>
+                            <li>Document everything and keep detailed records</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="guide-card">
+                        <div class="guide-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Communication Guidelines</h3>
+                        <ul>
+                            <li>All jail calls are recorded - speak carefully</li>
+                            <li>Don't discuss case details over the phone</li>
+                            <li>Focus on emotional support and practical needs</li>
+                            <li>Keep conversations positive and encouraging</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common legal questions</p>
+            </div>
+            
+            <div class="faq-list" id="faqList">
+                <div class="faq-loading">Loading FAQ...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get Personalized Help</h2>
+                <p>Connect with legal professionals for your specific situation</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                         alt="Professional consultation" loading="lazy">
+                    
+                    <div class="contact-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>24/7 Availability</h4>
+                                <p>Legal emergencies don't wait for business hours</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Confidential</h4>
+                                <p>All communications are protected and secure</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Local Expertise</h4>
+                                <p>Connected with attorneys in your jurisdiction</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" onsubmit="submitContactForm(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgency">Urgency Level *</label>
+                        <select id="urgency" name="urgency" required>
+                            <option value="">Select urgency level</option>
+                            <option value="emergency">Emergency - Need immediate help</option>
+                            <option value="urgent">Urgent - Within 24 hours</option>
+                            <option value="soon">Soon - Within a few days</option>
+                            <option value="general">General inquiry</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="situation">Brief Description of Your Situation *</label>
+                        <textarea id="situation" name="situation" rows="4" required 
+                                  placeholder="Please provide a brief, general description of your legal situation. Avoid specific details."></textarea>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="consent" name="consent" required>
+                        <label for="consent">
+                            I understand that this form does not create an attorney-client relationship and that my communication may not be privileged. I consent to being contacted by legal professionals. *
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Request for Help
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Judged</h3>
+                    <p>Connecting people with legal resources when they need them most.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Access</h4>
+                    <ul>
+                        <li><a href="#">Emergency Help</a></li>
+                        <li><a href="#">Find Attorney</a></li>
+                        <li><a href="#">Court Info</a></li>
+                        <li><a href="#">Bail Bonds</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Know Your Rights</a></li>
+                        <li><a href="#">Legal Aid Directory</a></li>
+                        <li><a href="#">Court Procedures</a></li>
+                        <li><a href="#">Family Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> 1-800-LEGAL-AID</li>
+                        <li><i class="fas fa-envelope"></i> help@judged.app</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Available Nationwide</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p>© 2024 Judged. This website provides general legal information and resources only.</p>
+                    <div class="legal-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Disclaimer</a>
+                    </div>
+                </div>
+                
+                <div class="legal-disclaimer">
+                    <p><i class="fas fa-exclamation-triangle"></i> <strong>Important Legal Disclaimer</strong></p>
+                    <p>This website provides general information only and does not constitute legal advice. The information may not apply to your specific situation. You should consult with a qualified attorney for advice regarding your individual circumstances. Use of this website does not create an attorney-client relationship.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
