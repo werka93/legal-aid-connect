@@ -1,4 +1,4 @@
-// DOM Content Loaded Event
+  // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
     initializeAccordion();
     initializeScrollAnimations();
