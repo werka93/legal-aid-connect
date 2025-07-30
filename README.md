@@ -32,6 +32,7 @@ This website addresses the critical information gap that families face when deal
 - **Card-based layout** for easy information consumption
 - (https://www.figma.com/board/O4IEfDJSpf55iKdYyHQdU3/UX--team-workspace?node-id=352-68&t=RU7oczd4LKoAgHuU-0)
 - (https://miro.com/app/board/uXjVJe8T6gk=/)
+- (https://docs.google.com/spreadsheets/d/1AMWB3blmotkBMPezIqPwVWz_HiERHJHMvWAL3XZMCiQ/edit?pli=1&gid=1762321029#gid=1762321029)
 
   ### 🔧 Functionality
 - **Interactive accordion sections** for question categories:
